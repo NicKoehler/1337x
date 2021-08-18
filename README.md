@@ -35,3 +35,5 @@ See the help for sorting and search using categories.
 ```sh
 python 1337x.py -h
 ```
+
+If the search presents pages, just enter __n__ or __next__ to go in the next page, __p__ or __prev__ to go in the previous page.

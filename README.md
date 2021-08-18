@@ -22,7 +22,7 @@ Install the requirements.
 python -m pip install -r requirements.txt
 ```
 
-## usage
+## Usage
 
 Base search.
 

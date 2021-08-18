@@ -1,6 +1,6 @@
 # 1337x.py
 
-![](https://i.imgur.com/jSWJIox.gif)
+![](https://i.imgur.com/pVR01Tm.gif)
 
 ## Installation
 

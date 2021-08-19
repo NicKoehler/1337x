@@ -160,26 +160,35 @@ class Search1337x:
                 print(f"< prev • {formatted_pages} • next >\n")
 
             try:
-                choice = input("Choose what you want to download > ").strip()
+                choices = list(
+                    map(
+                        lambda x: x.strip().lower(),
+                        input("Choose what you want to download > ").split(),
+                    )
+                )
             except KeyboardInterrupt:
                 break
 
-            if choice.isnumeric() and int(choice) <= len(titles):
-                self.start_download(titles[int(choice)][1])
+            if all(
+                choice.isnumeric() and int(choice) in titles.keys()
+                for choice in choices
+            ):
+                for choice in choices:
+                    self.start_download(titles[int(choice)][1])
                 break
 
-            elif choice.lower() in ["n", "next"]:
+            elif any(choice in ["n", "next"] for choice in choices):
                 if self.page < max([1, *pages]):
                     self.page += 1
                 continue
 
-            elif choice.lower() in ["p", "prev"]:
+            elif any(choice in ["p", "prev"] for choice in choices):
                 if self.page > 1:
                     self.page -= 1
                 continue
-            else:
-                print("Invalid choice")
-                break
+
+            print("Invalid choice")
+            break
 
     def start_download(self, link):
         """

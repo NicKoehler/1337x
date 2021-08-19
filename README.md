@@ -36,4 +36,10 @@ See the help for sorting and search using categories.
 python 1337x.py -h
 ```
 
+## Download
+
+When you are asked to choose the torrent, enter __one or more numbers__ divided by __spaces__ and press __Enter__ to confirm.
+
+## Pages
+
 If the search presents pages, just enter __n__ or __next__ to go in the next page, __p__ or __prev__ to go in the previous page.

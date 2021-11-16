@@ -68,7 +68,7 @@ class Search1337x:
     def __init__(self):
         self.page = 1
 
-    def search(self, query: str, category: str = None, sort: str = None):
+    def search(self, query: str, category: str = None, sort: str = None, no_download: bool = False):
         """
         creates an infinite loop showing the results fetched from the website
         and prompts the user to choose something to download
@@ -174,7 +174,7 @@ class Search1337x:
                 for choice in choices
             ):
                 for choice in choices:
-                    self.start_download(titles[int(choice)][1])
+                    self.start_download(titles[int(choice)][1], no_download)
                 break
 
             elif any(choice in ["n", "next"] for choice in choices):
@@ -190,13 +190,16 @@ class Search1337x:
             print("Invalid choice")
             break
 
-    def start_download(self, link):
+    def start_download(self, link: str, no_download: bool):
         """
         fetch the magnet from the link and opens it
         """
         soup = Soup(get(link).text, "lxml")
         magnet_link = soup.find("a", href=compile("^magnet:.*"))["href"]
-        self.open(magnet_link)
+        if no_download:
+            print(magnet_link)
+        else:
+            self.open(magnet_link)
 
     def open(self, link):
         """
@@ -258,12 +261,17 @@ if __name__ == "__main__":
         "-t", "--sort-type", type=str, help="< ASC | DESC >", default="DESC"
     )
 
+    parser.add_argument(
+        "-d", "--no-download", action='store_true', help="Don't download torrent, only print magnets"
+    )
+
     args = parser.parse_args()
 
     query = args.query
     sort_type = args.sort_type.upper()
+    no_download = args.no_download
 
     category = CATEGORIES.get(args.category.upper()) if args.category else None
     sort = SORT[sort_type].get(args.sort.upper()) if args.sort else None
 
-    Search1337x().search(query, category, sort)
+    Search1337x().search(query, category, sort, no_download)

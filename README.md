@@ -31,7 +31,7 @@ python -m 1337x "title with spaces"
 See the help for sorting and search using categories.
 
 ```sh
-python 1337x -h
+python -m 1337x -h
 ```
 
 When you are asked to choose the torrent, enter __one or more numbers__ divided by __spaces__ and press __Enter__ to confirm.

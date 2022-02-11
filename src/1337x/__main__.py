@@ -1,7 +1,11 @@
 import argparse
 from .py_1337x import Search1337x, CATEGORIES, SORT
 
-parser = argparse.ArgumentParser(description="Finds torrents on 1337x")
+parser = argparse.ArgumentParser(
+    prog="1337x",
+    description="Finds torrents on 1337x",
+    usage="Usage: python -m 1337x <search_term> [options]"
+)
 parser.add_argument("query", type=str, help="Enter a query to search")
 parser.add_argument(
     "-c",

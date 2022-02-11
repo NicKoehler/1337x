@@ -1,32 +1,5 @@
 import argparse
-from .py_1337x import Search1337x
-
-CATEGORIES = {
-    "TV": Search1337x.TV,
-    "XXX": Search1337x.XXX,
-    "GAMES": Search1337x.GAMES,
-    "MUSIC": Search1337x.MUSIC,
-    "ANIME": Search1337x.ANIME,
-    "OTHER": Search1337x.OTHER,
-    "MOVIES": Search1337x.MOVIES,
-    "APPLICATIONS": Search1337x.APPLICATIONS,
-    "DOCUMENTARIES": Search1337x.DOCUMENTARIES,
-}
-
-SORT = {
-    "ASC": {
-        "LEECHERS": Search1337x.LEECHERS_ASC,
-        "SEEDERS": Search1337x.SEEDERS_ASC,
-        "TIME": Search1337x.TIME_ASC,
-        "SIZE": Search1337x.SIZE_ASC,
-    },
-    "DESC": {
-        "LEECHERS": Search1337x.LEECHERS_DESC,
-        "SEEDERS": Search1337x.SEEDERS_DESC,
-        "TIME": Search1337x.TIME_DESC,
-        "SIZE": Search1337x.SIZE_DESC,
-    },
-}
+from .py_1337x import Search1337x, CATEGORIES, SORT
 
 parser = argparse.ArgumentParser(description="Finds torrents on 1337x")
 parser.add_argument("query", type=str, help="Enter a query to search")

@@ -4,6 +4,7 @@ Author: NicKoehler
 
 """
 
+from ast import Raise
 import os
 import platform
 import subprocess
@@ -96,9 +97,14 @@ class Search1337x:
                 url = self._NORMAL_SEARCH.format(
                     query, self.page
                 )
+            
+            r = get(url, headers=self.HEADERS)
 
-            soup = Soup(get(url, headers=self.HEADERS).text, "lxml")
+            if r.status_code != 200:
+                raise Exception(f"Error: {r.status_code} - {r.reason}")
 
+            r.encoding = "utf-8"
+            soup = Soup(r.text, "lxml")
             body = soup.find("tbody")
             pages = soup.find("div", class_="pagination")
 
@@ -191,6 +197,7 @@ class Search1337x:
             print("Invalid choice")
             break
 
+
     def start_download(self, link: str, no_download: bool):
         """
         fetch the magnet from the link and opens it
@@ -222,3 +229,30 @@ class Search1337x:
                 stdout=subprocess.DEVNULL,
                 stderr=subprocess.DEVNULL,
             )
+
+CATEGORIES = {
+    "TV": Search1337x.TV,
+    "XXX": Search1337x.XXX,
+    "GAMES": Search1337x.GAMES,
+    "MUSIC": Search1337x.MUSIC,
+    "ANIME": Search1337x.ANIME,
+    "OTHER": Search1337x.OTHER,
+    "MOVIES": Search1337x.MOVIES,
+    "APPLICATIONS": Search1337x.APPLICATIONS,
+    "DOCUMENTARIES": Search1337x.DOCUMENTARIES,
+}
+
+SORT = {
+    "ASC": {
+        "LEECHERS": Search1337x.LEECHERS_ASC,
+        "SEEDERS": Search1337x.SEEDERS_ASC,
+        "TIME": Search1337x.TIME_ASC,
+        "SIZE": Search1337x.SIZE_ASC,
+    },
+    "DESC": {
+        "LEECHERS": Search1337x.LEECHERS_DESC,
+        "SEEDERS": Search1337x.SEEDERS_DESC,
+        "TIME": Search1337x.TIME_DESC,
+        "SIZE": Search1337x.SIZE_DESC,
+    },
+}

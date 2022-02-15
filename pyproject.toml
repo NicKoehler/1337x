@@ -1,9 +1,5 @@
 [build-system]
 requires = [
     "setuptools>=42",
-    "wheel",
-    "requests",
-    "bs4",
-    "lxml",
 ]
 build-backend = "setuptools.build_meta"

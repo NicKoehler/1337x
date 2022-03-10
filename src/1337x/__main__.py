@@ -4,8 +4,9 @@ from .py_1337x import Search1337x, CATEGORIES, SORT
 parser = argparse.ArgumentParser(
     prog="1337x",
     description="Finds torrents on 1337x",
-    usage="Usage: python -m 1337x <search_term> [options]"
+    usage="Usage: python -m 1337x <search_term> [options]\nSupports multiple torrent download, e.g. 1 2 3 or 1-3",
 )
+
 parser.add_argument("query", type=str, help="Enter a query to search")
 parser.add_argument(
     "-c",
@@ -21,7 +22,7 @@ parser.add_argument(
 )
 
 parser.add_argument(
-    "-d", "--no-download", action='store_true', help="Don't download torrent, only print magnets"
+    "-d", "--no-download", action='store_true', help="Only prints and copy to clipboard all magnet links"
 )
 
 args = parser.parse_args()

@@ -10,6 +10,7 @@ import platform
 import subprocess
 from re import compile
 from requests import get
+from pyperclip import copy
 from bs4 import BeautifulSoup as Soup
 
 
@@ -167,29 +168,42 @@ class Search1337x:
                 print(f"< prev • {formatted_pages} • next >\n")
 
             try:
-                choices = list(
-                    map(
-                        lambda x: x.strip().lower(),
-                        input("Choose what you want to download > ").split(),
+                choices = []
+                choice = input("Choose what you want to download > ")
+
+                if choice.count('-') == 1:
+                    num1, num2 = choice.split('-')
+                    if num1.isnumeric() and num2.isnumeric():
+                        choices = [i for i in range(int(num1), int(num2)+1)]
+                else:
+                    choices = list(
+                        map(
+                            lambda x: x.strip().lower(),
+                            choice.split(),
+                        )
                     )
-                )
             except KeyboardInterrupt:
                 break
 
-            if all(
-                choice.isnumeric() and int(choice) in titles.keys()
-                for choice in choices
-            ):
+            if all(type(choice) is str and choice.isnumeric() for choice in choices):
+                choices = [int(i) for i in choices]
+
+            if all(choice in titles.keys() for choice in choices) and choices:
+                clipboard = []
                 for choice in choices:
-                    self.start_download(titles[int(choice)][1], no_download)
+                    clipboard.append(self.start_download(titles[choice][1], no_download))
+                if no_download:
+                    to_copy = "\n\n".join(clipboard)
+                    copy(to_copy)
+                    print(to_copy)
                 break
 
-            elif any(choice in ["n", "next"] for choice in choices):
+            elif any(choice in ["n", "next"] and pages for choice in choices):
                 if self.page < max([1, *pages]):
                     self.page += 1
                 continue
 
-            elif any(choice in ["p", "prev"] for choice in choices):
+            elif any(choice in ["p", "prev"] and pages for choice in choices):
                 if self.page > 1:
                     self.page -= 1
                 continue
@@ -204,10 +218,9 @@ class Search1337x:
         """
         soup = Soup(get(link).text, "lxml")
         magnet_link = soup.find("a", href=compile("^magnet:.*"))["href"]
-        if no_download:
-            print(magnet_link)
-        else:
+        if not no_download:
             self.open(magnet_link)
+        return magnet_link
 
     def open(self, link):
         """

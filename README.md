@@ -1,6 +1,6 @@
 # 1337x.py
 
-![](https://i.imgur.com/pVR01Tm.gif)
+![](https://i.imgur.com/uLFHgv3.gif)
 
 
 ## Table of Contents
